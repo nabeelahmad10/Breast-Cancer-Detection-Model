@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Tanishka 🎉</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade { animation: fadeIn 0.7s ease forwards; }
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+}
+.confetti {
+  position: fixed;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  animation: confetti 1.5s linear forwards;
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen text-white overflow-x-hidden">
+
+<!-- Music -->
+<div class="hidden">
+  <iframe src="https://www.youtube.com/embed/Fm_LYvbh3pU?autoplay=1&loop=1&playlist=Fm_LYvbh3pU" allow="autoplay"></iframe>
+</div>
+
+<!-- Welcome -->
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+  <h1 class="text-6xl font-bold fade">Happy Birthday 🎂</h1>
+  <h2 class="text-5xl mt-4 fade">Tanishka 🌸</h2>
+
+  <p class="mt-6 text-xl max-w-xl fade">
+    This page is made just for you.  
+    Click around and enjoy everything.
+  </p>
+
+  <button onclick="openMenu()" class="mt-8 px-8 py-3 bg-white text-purple-600 rounded-full text-lg font-semibold hover:scale-105 transition">
+    Start 🎉
+  </button>
+</section>
+
+<!-- Menu -->
+<section id="menu" class="hidden py-20 px-6 bg-black bg-opacity-20">
+  <div class="max-w-4xl mx-auto text-center">
+    <h3 class="text-4xl font-bold mb-10">Choose what you want 💫</h3>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <button onclick="unlock('matter')" class="btn">Why you matter 🤍</button>
+      <button onclick="unlock('energy')" class="btn">Friendship energy 😂</button>
+      <button onclick="unlock('wish')" class="btn">Birthday wish 🎈</button>
+      <button onclick="unlock('photos')" class="btn">Memory gallery 📸</button>
+    </div>
+
+    <div id="content" class="hidden mt-12 bg-white bg-opacity-20 p-8 rounded-3xl fade"></div>
+  </div>
+</section>
+
+<script>
+function openMenu() {
+  document.getElementById("menu").classList.remove("hidden");
+  window.scrollTo({ top: menu.offsetTop, behavior: "smooth" });
+}
+
+function confettiBurst() {
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.backgroundColor = ["#fff","#fde68a","#f472b6","#a5f3fc"][Math.floor(Math.random()*4)];
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 1500);
+  }
+}
+
+function unlock(type) {
+  confettiBurst();
+  const box = document.getElementById("content");
+  box.classList.remove("hidden");
+
+  if (type === "matter") {
+    box.innerHTML = `
+      You matter because you are kind, genuine, and thoughtful.  
+      You make people feel heard and comfortable.  
+      That is something truly special.
+    `;
+  }
+
+  if (type === "energy") {
+    box.innerHTML = `
+      Every conversation with you has laughter.  
+      Your vibe makes moments better and memories brighter.  
+      That is best friend energy.
+    `;
+  }
+
+  if (type === "wish") {
+    box.innerHTML = `
+      I hope this year gives you confidence, peace, and success.  
+      May you grow, explore, and enjoy every moment ahead.
+    `;
+  }
+
+  if (type === "photos") {
+    box.innerHTML = `
+      Add your favorite photos here 📸  
+      <br><br>
+      Replace these boxes with images of memories you love.
+      <div class="grid grid-cols-2 gap-4 mt-6">
+        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
+        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
+        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
+        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
+      </div>
+    `;
+  }
+}
+</script>
+
+<style>
+.btn {
+  background: white;
+  color: #6b21a8;
+  padding: 1rem;
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+</style>
+
+</body>
+</html>
