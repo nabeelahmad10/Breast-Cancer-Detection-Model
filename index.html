@@ -6,138 +6,209 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade { animation: fadeIn 0.7s ease forwards; }
 
-@keyframes confetti {
+/* Background animation */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, #ff8ad8, transparent 40%),
+              radial-gradient(circle at 80% 30%, #8ad8ff, transparent 40%),
+              radial-gradient(circle at 50% 80%, #c18aff, transparent 40%);
+  animation: bgMove 15s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes bgMove {
+  from { transform: scale(1) translate(0,0); }
+  to { transform: scale(1.2) translate(-20px, -30px); }
+}
+
+/* Floating particles */
+.particle {
+  position: fixed;
+  bottom: -20px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 0.6; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* Text animations */
+@keyframes popIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop { animation: popIn 0.8s ease forwards; }
+
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+  50% { box-shadow: 0 0 35px rgba(255,255,255,0.8); }
+}
+.glow { animation: glowPulse 2s infinite; }
+
+/* Progress bar */
+@keyframes fillBar {
+  from { width: 0%; }
+  to { width: var(--target); }
+}
+
+/* Confetti */
+@keyframes confettiFall {
   0% { transform: translateY(0) rotate(0); opacity: 1; }
-  100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
+  100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
 }
 .confetti {
   position: fixed;
   top: 0;
   width: 10px;
   height: 10px;
-  animation: confetti 1.5s linear forwards;
+  animation: confettiFall 1.8s linear forwards;
 }
+
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen text-white overflow-x-hidden">
+<body class="bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 text-white overflow-x-hidden">
 
 <!-- Music -->
 <div class="hidden">
   <iframe src="https://www.youtube.com/embed/Fm_LYvbh3pU?autoplay=1&loop=1&playlist=Fm_LYvbh3pU" allow="autoplay"></iframe>
 </div>
 
-<!-- Welcome -->
-<section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
-  <h1 class="text-6xl font-bold fade">Happy Birthday 🎂</h1>
-  <h2 class="text-5xl mt-4 fade">Tanishka 🌸</h2>
+<!-- PARTICLES -->
+<script>
+for(let i=0;i<40;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=8+Math.random()*10+"s";
+  document.body.appendChild(p);
+}
+</script>
 
-  <p class="mt-6 text-xl max-w-xl fade">
-    This page is made just for you.  
-    Click around and enjoy everything.
-  </p>
+<!-- INTRO -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+  <h1 class="text-7xl font-extrabold pop">Happy Birthday 🎂</h1>
+  <h2 class="text-6xl mt-4 pop">Tanishka 🌸</h2>
+  <p id="type" class="mt-8 text-xl max-w-xl"></p>
 
-  <button onclick="openMenu()" class="mt-8 px-8 py-3 bg-white text-purple-600 rounded-full text-lg font-semibold hover:scale-105 transition">
-    Start 🎉
+  <button onclick="start()" class="mt-12 px-12 py-4 bg-white text-purple-700 rounded-full text-xl font-semibold glow hover:scale-110 transition">
+    Start the Experience ✨
   </button>
 </section>
 
-<!-- Menu -->
-<section id="menu" class="hidden py-20 px-6 bg-black bg-opacity-20">
+<!-- JOURNEY -->
+<section id="journey" class="hidden py-20 px-6 bg-black bg-opacity-30">
   <div class="max-w-4xl mx-auto text-center">
-    <h3 class="text-4xl font-bold mb-10">Choose what you want 💫</h3>
+    <h3 class="text-4xl font-bold pop mb-6">Birthday Journey 🎉</h3>
 
-    <div class="grid md:grid-cols-2 gap-6">
-      <button onclick="unlock('matter')" class="btn">Why you matter 🤍</button>
-      <button onclick="unlock('energy')" class="btn">Friendship energy 😂</button>
-      <button onclick="unlock('wish')" class="btn">Birthday wish 🎈</button>
-      <button onclick="unlock('photos')" class="btn">Memory gallery 📸</button>
+    <div class="w-full bg-white bg-opacity-30 rounded-full h-4 mb-10 overflow-hidden">
+      <div id="bar" class="h-full bg-white rounded-full"></div>
     </div>
 
-    <div id="content" class="hidden mt-12 bg-white bg-opacity-20 p-8 rounded-3xl fade"></div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <button onclick="unlock(1)" class="btn">Why you matter 🤍</button>
+      <button onclick="unlock(2)" class="btn">Friendship energy 😂</button>
+      <button onclick="unlock(3)" class="btn">Final wish 🎈</button>
+    </div>
+
+    <div id="card" class="hidden mt-12 bg-white bg-opacity-20 p-10 rounded-3xl pop text-lg leading-relaxed"></div>
   </div>
 </section>
 
+<!-- FINAL -->
+<section id="final" class="hidden min-h-screen flex flex-col justify-center items-center text-center px-6">
+  <h1 class="text-6xl font-extrabold pop">This Is For You 🌟</h1>
+  <p class="mt-6 text-2xl max-w-2xl pop">
+    You bring calm, laughter, and honesty into every space you enter.  
+    People remember moments better when you are part of them.
+  </p>
+  <p class="mt-8 text-xl pop">
+    Happy Birthday Tanishka 💙  
+    Keep being real. Keep shining.
+  </p>
+</section>
+
 <script>
-function openMenu() {
-  document.getElementById("menu").classList.remove("hidden");
-  window.scrollTo({ top: menu.offsetTop, behavior: "smooth" });
+/* Typewriter */
+const text="This page exists to celebrate you and the positivity you bring.";
+let i=0;
+function type(){
+  if(i<text.length){
+    document.getElementById("type").innerHTML+=text[i++];
+    setTimeout(type,35);
+  }
+}
+type();
+
+/* Start */
+function start(){
+  document.getElementById("journey").classList.remove("hidden");
+  window.scrollTo({top:journey.offsetTop,behavior:"smooth"});
 }
 
-function confettiBurst() {
-  for (let i = 0; i < 40; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.backgroundColor = ["#fff","#fde68a","#f472b6","#a5f3fc"][Math.floor(Math.random()*4)];
+/* Confetti */
+function confettiBurst(){
+  for(let i=0;i<60;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*window.innerWidth+"px";
+    c.style.backgroundColor=["#fff","#fde68a","#f9a8d4","#a5f3fc"][Math.floor(Math.random()*4)];
     document.body.appendChild(c);
-    setTimeout(() => c.remove(), 1500);
+    setTimeout(()=>c.remove(),1800);
   }
 }
 
-function unlock(type) {
+let step=0;
+
+/* Unlock */
+function unlock(n){
+  if(n<=step) return;
+  step++;
   confettiBurst();
-  const box = document.getElementById("content");
-  box.classList.remove("hidden");
 
-  if (type === "matter") {
-    box.innerHTML = `
-      You matter because you are kind, genuine, and thoughtful.  
-      You make people feel heard and comfortable.  
-      That is something truly special.
-    `;
+  const bar=document.getElementById("bar");
+  bar.style.setProperty("--target",(step/3)*100+"%");
+  bar.style.animation="fillBar 1s forwards";
+
+  const card=document.getElementById("card");
+  card.classList.remove("hidden");
+
+  if(n===1){
+    card.innerHTML="You matter because you are dependable, thoughtful, and kind. People feel heard around you.";
   }
-
-  if (type === "energy") {
-    box.innerHTML = `
-      Every conversation with you has laughter.  
-      Your vibe makes moments better and memories brighter.  
-      That is best friend energy.
-    `;
+  if(n===2){
+    card.innerHTML="Your energy makes conversations lighter and moments more fun. That is true friendship.";
   }
-
-  if (type === "wish") {
-    box.innerHTML = `
-      I hope this year gives you confidence, peace, and success.  
-      May you grow, explore, and enjoy every moment ahead.
-    `;
-  }
-
-  if (type === "photos") {
-    box.innerHTML = `
-      Add your favorite photos here 📸  
-      <br><br>
-      Replace these boxes with images of memories you love.
-      <div class="grid grid-cols-2 gap-4 mt-6">
-        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
-        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
-        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
-        <div class="h-32 bg-white bg-opacity-30 rounded-xl"></div>
-      </div>
-    `;
+  if(n===3){
+    card.innerHTML="I hope this year gives you confidence, peace, and progress in everything you do.";
+    setTimeout(()=>{
+      document.getElementById("final").classList.remove("hidden");
+      window.scrollTo({top:final.offsetTop,behavior:"smooth"});
+    },1200);
   }
 }
 </script>
 
 <style>
-.btn {
-  background: white;
-  color: #6b21a8;
-  padding: 1rem;
-  border-radius: 9999px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  transition: transform 0.2s;
+.btn{
+  background:white;
+  color:#6b21a8;
+  padding:1rem;
+  border-radius:9999px;
+  font-size:1.1rem;
+  font-weight:600;
+  transition:transform 0.25s;
 }
-.btn:hover {
-  transform: scale(1.05);
-}
+.btn:hover{ transform:scale(1.1); }
 </style>
 
 </body>
