@@ -19,7 +19,7 @@
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.fadeUp { animation: fadeUp 0.8s ease forwards; }
+.fadeUp { animation: fadeUp 0.9s ease forwards; }
 
 @keyframes confetti {
   0% { transform: translateY(0) rotate(0); opacity: 1; }
@@ -55,25 +55,78 @@
   </button>
 </section>
 
-<!-- SCREEN 2 -->
-<section id="screen2" class="hidden min-h-screen flex flex-col items-center justify-center text-center px-6">
-  <h1 class="text-6xl font-bold fadeUp">You Did It 😅</h1>
-  <h2 class="text-5xl mt-4 fadeUp">Happy Birthday 🎂</h2>
-  <h3 class="text-4xl mt-2 fadeUp">Tanishka 🌸</h3>
+<!-- SCREEN 2 FINAL -->
+<section id="screen2" class="hidden min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-y-auto">
+  
+  <h1 class="text-7xl md:text-8xl font-extrabold fadeUp">
+    Happy Birthday 🎂
+  </h1>
+  <h2 class="text-6xl md:text-7xl mt-4 font-bold fadeUp">
+    Tanishka 🌸
+  </h2>
 
-  <p class="mt-8 text-xl max-w-xl fadeUp">
-    That button was meant to mess with you a little.  
-    Just like how fun and unpredictable life feels around you.
-  </p>
+  <div class="mt-12 max-w-4xl text-xl md:text-2xl leading-relaxed space-y-8 fadeUp">
 
-  <p class="mt-6 text-lg max-w-xl fadeUp">
-    You are thoughtful, dependable, and appreciated more than you know.  
-    People feel comfortable and happy around you.
-  </p>
+    <p>
+      First of all, no, I did not forget your birthday.  
+      Not even for a second.  
+      Today matters because you matter.
+    </p>
 
-  <p class="mt-8 text-2xl fadeUp">
-    Have an amazing year ahead 💙
-  </p>
+    <p>
+      I wanted to do something different for you because you are not just anyone.  
+      You are someone who genuinely makes a difference in my life.
+    </p>
+
+    <p>
+      Our conversations mean more than you probably realize.  
+      From random talks to serious ones, every conversation with you feels easy and real.  
+      You always listen, understand, and make things feel lighter.
+    </p>
+
+    <p>
+      And then there is our music.  
+      Somehow our playlists match so well, like we are always on the same wavelength.  
+      Sharing Spotify jams, looping the same songs, and getting excited over the same tracks  
+      has become such a small but important part of our friendship.
+    </p>
+
+    <p>
+      Whether it is late night listening, recommending songs,  
+      or realizing we both already had the same track saved,  
+      it always feels nice knowing our music taste connects us too.
+    </p>
+
+    <p>
+      You have been there for me in ways that truly matter.  
+      Supporting me, checking in on me, standing by me without making a big deal about it.  
+      That kind of presence is rare.
+    </p>
+
+    <p>
+      You are dependable, thoughtful, and kind.  
+      People feel comfortable around you because you make them feel heard and valued.  
+      That is one of your strongest qualities.
+    </p>
+
+    <p>
+      I hope you never forget how important you are.  
+      Not just today, but always.  
+      You deserve appreciation, happiness, and good things coming your way.
+    </p>
+
+    <p class="text-2xl md:text-3xl font-semibold">
+      Thank you for being you.  
+      Thank you for being there.  
+      Thank you for being my friend.
+    </p>
+
+    <p class="text-3xl md:text-4xl font-bold">
+      Have the best year ahead 🌟
+    </p>
+
+  </div>
+
 </section>
 
 <script>
@@ -118,7 +171,7 @@ function reveal() {
 }
 
 function confettiBurst() {
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < 90; i++) {
     const c = document.createElement("div");
     c.className = "confetti";
     c.style.left = Math.random() * window.innerWidth + "px";
